@@ -1,0 +1,14 @@
+.fa{
+	color: blue;
+}
+.board{
+	background: blue;
+}
+
+.field{
+	background-color: yellow;
+}
+.startfield{
+	background-color: rgba(76, 175, 80, 0.3);
+	}
+
