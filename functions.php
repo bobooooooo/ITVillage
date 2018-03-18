@@ -51,38 +51,38 @@ function fill_board($array,$element){
 	switch ($array[$element]) {
 		case '0':
 			if($element < 4){
-				$output= '<i class="fa fa-arrow-circle-up fa-3x" aria-hidden="true"></i>';
+				$output= '<i class="fa fa-arrow-circle-up fa-3x" aria-hidden="true"></i><p>Празно поле</p>';
 			}
 			elseif($element >3 && $element <8){
-				$output= '<i class="fa fa-arrow-circle-right fa-3x" aria-hidden="true"></i>';
+				$output= '<i class="fa fa-arrow-circle-right fa-3x" aria-hidden="true"></i><p>Празно поле</p>';
 			}
 			elseif($element >7 && $element <12){
-				$output= '<i class="fa fa-arrow-circle-down fa-3x" aria-hidden="true"></i>';
+				$output= '<i class="fa fa-arrow-circle-down fa-3x" aria-hidden="true"></i><p>Празно поле</p>';
 			}
 			elseif($element >11 && $element <16){
 				$output= '<i class="fa fa-arrow-circle-left fa-3x" aria-hidden="true"></i>';
 			}
 			break;
 		case 'N':
-			$output= '<i class="fa fa-star fa-3x" aria-hidden="true"></i>';
+			$output= '<i class="fa fa-star fa-3x" aria-hidden="true"></i><p>ВСО</p>';
 			break;
 		case 'V':
-			$output= '<i class="fa fa-money fa-3x" aria-hidden="true"></i>';
+			$output= '<i class="fa fa-money fa-3x" aria-hidden="true"></i><p>x10</p>';
 			break;
 		case 'S':
-			$output= '<i class="fa fa-cloud fa-3x" aria-hidden="true"></i>';
+			$output= '<i class="fa fa-cloud fa-3x" aria-hidden="true"></i><p>Буря</p>';
 			break;
 		case 'F':
-			$output= '<i class="fa fa-eur fa-3x" aria-hidden="true"></i>';
+			$output= '<i class="fa fa-eur fa-3x" aria-hidden="true"></i><p>+20</p>';
 			break;
 		case 'I':
-			$output= '<i class="fa fa-bed fa-3x" aria-hidden="true"></i>';
+			$output= '<i class="fa fa-bed fa-3x" aria-hidden="true"></i><p>Мотел</p>';
 			break;
 		case 'IM':
-			$output= '<i class="fa fa-bed fa-3x" aria-hidden="true"></i>';
+			$output= '<i class="fa fa-bed fa-3x" aria-hidden="true"></i><p>Ваш мотел</p>';
 			break;
 		case 'P':
-			$output= '<i class="fa fa-beer fa-3x" aria-hidden="true"></i>';
+			$output= '<i class="fa fa-beer fa-3x" aria-hidden="true"></i><p>Кръчма</p>';
 			break;			
 		}//end of switch
 		return $output;

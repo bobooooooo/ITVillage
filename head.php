@@ -7,6 +7,7 @@
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="addons/font-awesome-4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet"> 
 </head>
-<body>
+<body class="text-white font-weight-bold">
 	

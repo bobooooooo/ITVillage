@@ -1,14 +1,29 @@
+body, header, a, img, span, nav, main, aside, footer, div, p, article, section{
+	margin: 0;
+	padding: 0;
+} 
 .fa{
-	color: blue;
+	color: #1D0DCF;
+}
+.fa-arrow-right{
+	color: #FFF;
+}
+.field{
+	background-color: rgba(242, 252, 37, 0.6);
+}
+body { 
+  background: url('../img/village.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 .board{
-	background: blue;
+	background: rgba(192, 179, 169, 0.3); 
 }
-
-.field{
-	background-color: yellow;
+.arena{
+	border:5px solid black;
 }
-.startfield{
-	background-color: rgba(76, 175, 80, 0.3);
-	}
-
+html {
+    font-size: 16px;
+}

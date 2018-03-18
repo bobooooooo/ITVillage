@@ -4,15 +4,18 @@ include('bottom.php');
 include('functions.php');
 include('db/connection.php');
 session_start();
+//bootstrap container
+echo '<div class="container"><div class="row mt-2 pt-2"><div class="col"></div><div class="col-6">';
 //security check
 if($_SESSION['authorization'] = 'true'){
 //get user stats from db
-	$query = "SELECT games,win,lose FROM users WHERE username='".$_SESSION['user']."'";
+	$query = "SELECT games,win,lose,coins FROM users WHERE username='".$_SESSION['user']."'";
 	$result = mysqli_query($conn,$query);
 	$stat = mysqli_fetch_assoc($result);
 	$games = $stat['games'];
 	$win = $stat['win'];
 	$lose = $stat['lose'];
+	$total_coins = $stat['coins'];
 //dice
 $dice = 0;
 //$board = array('0','P','I','0','S','F','P','0','S','I','V','0','F','I','N','F'); za triene
@@ -22,7 +25,7 @@ if($_SESSION['coins'] >= 0 && $_SESSION['turns'] >= 1 && $_SESSION['vsowin'] == 
 	?>
 	<!--end of php and button start -->
  	<form id="dice" method="POST" action="">
- 	<button type="Submit" form="dice" name="Submit" value="Submit">Напред</button>
+ 	<!--<button type="Submit" form="dice" name="Submit" value="Submit">Напред</button>-->
  	</form>	
 <?php //php starts here
 	if(isset($_POST['Submit'])){
@@ -65,38 +68,44 @@ if($_SESSION['coins'] >= 0 && $_SESSION['turns'] >= 1 && $_SESSION['vsowin'] == 
 }
 	else{
 		if( $_SESSION['vsowin'] != 0){
-		echo "Спечелихте с помощта на VSO!";
+		echo '<span class="alert alert-success" role="alert">Спечелихте с помощта на VSO!</span>';
 		echo "Имате ".$_SESSION['coins']." монети";	
 		$games+=1;
 		$win+=1;
+		$total_coins+=$_SESSION['coins'];
 		}//end of vso win
 		elseif( $_SESSION['mymotels'] == 3){
-		echo "Спечелихте! Притежавате всички мотели! ";
+		echo '<span class="alert alert-success" role="alert">Спечелихте! Притежавате всички мотели!</span>';
 		echo "Имате ".$_SESSION['coins']." монети";	
 		$games+=1;
 		$win+=1;
+		$total_coins+=$_SESSION['coins'];
 		}//end of property win
 		elseif( $_SESSION['coins'] <= 0){
-		echo "Фалит! Загубихте! ";
+		echo '<span class="alert alert-danger" role="alert">Фалит! Загубихте!</span>';
 		echo "Нямате монети!";
 		$games+=1;
-		$lose+=1;	
+		$lose+=1;
+		$total_coins+=$_SESSION['coins'];	
 		}//end of lose no coins
 		elseif( $_SESSION['turns'] <= 0){
-		echo "Нямате повече ходове! Загубихте! ";
+		echo '<span class="alert alert-danger" role="alert">Нямате повече ходове! Загубихте!</span>';
 		echo "Имате ".$_SESSION['coins']." монети";	
 		$games+=1;
 		$lose+=1;
+		$total_coins+=$_SESSION['coins'];
 		}//end of lose no turns
 		//add stats to db
-		$query_add = "UPDATE users SET games=".$games.",win=".$win.",lose=".$lose." WHERE username = '".$_SESSION['user']."'";
+		$query_add = "UPDATE users SET games=".$games.",win=".$win.",lose=".$lose.",coins=".$total_coins." WHERE username = '".$_SESSION['user']."'";
 		$result_add = mysqli_query($conn,$query_add);
+		// remove all session variables
 	}//else game over
 	//navigation
 
 ?>
-<table>
-	<thead>
+<div class="">
+<table class="table table-sm">
+	<thead class="thead-light">
 		<tr>
 			<th>Играч</th>
 			<th>Зар</th>
@@ -105,7 +114,7 @@ if($_SESSION['coins'] >= 0 && $_SESSION['turns'] >= 1 && $_SESSION['vsowin'] == 
 			<th>Събития</th>
 		</tr>	
 	</thead>
-	<tbody>
+	<tbody class="table-dark">
 		<tr>
 			<td><?php echo $_SESSION['user'];?></td>
 			<td><?php echo $dice;?></td>
@@ -114,8 +123,10 @@ if($_SESSION['coins'] >= 0 && $_SESSION['turns'] >= 1 && $_SESSION['vsowin'] == 
 			<td><?php echo $_SESSION['event'];?></td>
 		</tr>
 	</tbody>
+	</table>
 	<!--prepare board table and fill it with fill_board func-->
-	<table>
+	<div class="board mt-1 mb-1 pt-1 pb-1">
+	<table class="table table-bordered table-sm table-responsive-md text-small text-centered">
 		<tr>
 			<td class="<?=$field4?>"><?=fill_board(($_SESSION['board']),4);?></td>
 			<td class='<?=$field5?>'><?=fill_board(($_SESSION['board']),5)?></td>
@@ -125,7 +136,7 @@ if($_SESSION['coins'] >= 0 && $_SESSION['turns'] >= 1 && $_SESSION['vsowin'] == 
 		</tr>
 		<tr>
 			<td class='<?=$field3?>'><?=fill_board(($_SESSION['board']),3)?></td>
-			<td colspan='3' rowspan='3'></td>
+			<td colspan='3' rowspan='3'><button type="Submit" form="dice" name="Submit" value="Submit" class="btn-primary btn-lg btn-block mt-5 pt-5 pb-5 mb-5">Напред</button></td>
 			<td class='<?=$field9?>'><?=fill_board(($_SESSION['board']),9)?></td>		
 		</tr>
 		<tr>
@@ -144,28 +155,31 @@ if($_SESSION['coins'] >= 0 && $_SESSION['turns'] >= 1 && $_SESSION['vsowin'] == 
 			<td class='<?=$field12?>'><?=fill_board(($_SESSION['board']),12)?></td>
 		</tr>
 	</table>
-</table>
-<table>
-	<thead>
+</div>
+<table class="table table-sm">
+	<thead class="thead-dark">
 		<tr>
-			<th colspan="3">Статистика</th>
+			<th colspan="4">Вашият общ резултат</th>
 		</tr>
 		<tr>
 			<th>Игри</th>
 			<th>Загуби</th>
 			<th>Победи</th>
+			<th>Спечелени монети</th>
 		</tr>	
 	</thead>
-	<tbody>
+	<tbody class="table-success">
 		<tr>
 			<td><?php echo $games;?></td>
 			<td><?php echo $win;?></td>
 			<td><?php echo $lose;?></td>
+			<td><?php echo $total_coins;?></td>
 		</tr>
 	</tbody>
-		<a href="access.php">Нова Игра</а>
-		<a href="stats.php">Класиране</а>
-		<a href="index.php">Начало</а>
+</table>
+</div>
+		<a href="stats.php" class="btn btn-primary btn-small ml-2 mr-2" role="button">Класиране</а>
+		<a href="index.php" class="btn btn-primary btn-small ml-2 mr-2" role="button">Начало</а>
 <?php
 
 
@@ -174,4 +188,6 @@ else{
 	echo "Невалиден потребител";
 	echo '<a href="index.php">Начална</а>';
 }
+//bootstrap equal end
+echo '</div><div class=col></div></div></div>';
 

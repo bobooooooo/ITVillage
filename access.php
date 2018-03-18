@@ -3,6 +3,8 @@ include('head.php');
 include('bottom.php');
 include('functions.php');
 include('db/connection.php');
+//bootstrap container
+echo '<div class="container"><div class="row mt-5 pt-5"><div class="col"></div><div class="col">';
 if(!empty ($_POST['username']) && !empty($_POST['password'])){
 $username = $_POST['username'];
 $password = $_POST['password'];
@@ -25,30 +27,34 @@ $password = $_POST['password'];
 				$start_board = array('0','P','I','0','S','F','P','0','S','I','V','0','F','I','N','F');
 				$_SESSION['board'] = $start_board;
 				$_SESSION['coins'] =50;
+				//$_SESSION['totalcoins'] = 0;
 				$_SESSION['turns'] = $turns;
 				$_SESSION['vsowin'] = 0;
 				$_SESSION['position'] = 0;
 				$_SESSION['mymotels'] = 0;
 				$_SESSION['event'] = 'Начало на играта';
-				var_dump($turns);
 				//start game
-				echo '<a href="gameplay.php">Започнете играта</а>';
-				echo '<a href="index.php">Начална Страница</а>';
+				echo '<p class="h1 text-center">Влязохте успешно!</p>';
+				echo '<p><a class="btn btn-primary mr-1" role="button" href="gameplay.php">Започнете играта</а>';
+				echo '<a class="btn btn-warning ml-2 " role="button"  href="index.php">Начална Страница</а><p>';
+				
 			}
 			else{
-			echo "Невалиден потребител или парола";
-			echo '<a href="index.php">Начална</а>';
+			echo '<p class="h3 text-center">Невалиден потребител или парола</p>';
+			echo '<a class="btn btn-warning ml-2" role="button" href="index.php">Началo</а>';
 			}//wrong pass	
 		}//result is ok, check pass and continue 
 		else{
-			echo "Невалиден потребител или парола";
-			echo '<a href="index.php">Начална</а>';
+			echo '<p class="h3 text-center">Невалиден потребител или парола</p>';
+			echo '<a class="btn btn-warning ml-2" role="button" href="index.php">Начална</а>';
 		}
 	}
 }//end of isset if
 else{
-	echo '<a href="index.php">Начална</а>';
+	echo '<a href="index.php">Начало</а>';
 }
+//bootstrap equal end
+echo '</div><div class="col"></div></div></div>';
 
 	
 
